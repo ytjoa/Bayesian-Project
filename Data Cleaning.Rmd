@@ -1,0 +1,23 @@
+---
+title: "Visualizations"
+output: pdf_document
+date: "2025-04-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# load ABM dataset
+load("abm.sav")
+```
+
+```{r}
+# clean dataset
+ABM <- ABM[,c("age", "race", "sex", "wbc","pmn","bands", "bloodgl", "gl", "pr", "reds","whites","polys","lymphs", "monos", "subset", "abm")]
+ABM <- ABM[!is.na(ABM$abm) & !is.na(ABM$age) & !is.na(ABM$race), ]
+ABM_remove_NA <- ABM[rowSums(is.na(ABM)) <= 3, ]
+write.csv(ABM_remove_NA, "ABM_remove_NA.csv", row.names = FALSE)
+```
+
