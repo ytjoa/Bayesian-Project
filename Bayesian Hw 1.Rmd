@@ -1,0 +1,56 @@
+---
+title: "Untitled"
+output:
+  pdf_document: default
+  html_document: default
+date: "2025-01-30"
+---
+
+```{r}
+install.packages("Hmisc")
+library(Hmisc)
+
+# Example: Retrieve the Titanic dataset
+getHdata(abm.sav)
+
+
+# Create derived variable: CSF to blood glucose ratio
+df <- df %>% mutate(csf_gluc_ratio = csf_gluc / blood_gluc)
+
+# Boxplot: CSF glucose by ABM status
+ggplot(df, aes(x = factor(abm), y = csf_gluc)) +
+  geom_boxplot() +
+  labs(title = "CSF Glucose by ABM Status", x = "ABM (0 = No, 1 = Yes)", y = "CSF Glucose")
+
+# Boxplot: CSF/Blood glucose ratio
+ggplot(df, aes(x = factor(abm), y = csf_gluc_ratio)) +
+  geom_boxplot() +
+  labs(title = "CSF/Blood Glucose Ratio by ABM", x = "ABM", y = "CSF/Blood Glucose Ratio")
+
+# Histogram of Month vs ABM
+ggplot(df, aes(x = month, fill = factor(abm))) +
+  geom_histogram(binwidth = 1, position = "stack") +
+  labs(title = "Month of Admission vs ABM", x = "Month", fill = "ABM")
+
+# Blood Band Percentage boxplot
+ggplot(df, aes(x = factor(abm), y = blood_band_pct)) +
+  geom_boxplot() +
+  labs(title = "Blood Band % by ABM", x = "ABM", y = "Blood Band %")
+
+# Count plot for sex
+ggplot(df, aes(x = factor(sex), fill = factor(abm))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Sex by ABM Status", x = "Sex (0 = Male, 1 = Female)", y = "Count")
+
+
+
+```
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
